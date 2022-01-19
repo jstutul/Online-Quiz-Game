@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <style>
+    #quiz_form{
+        width: 40%;
+        margin:0 auto;
+    }
+    @media only screen and (max-width:500px) {
+   #quiz_form{
+        width: 100%;
+        margin:0 auto;
+    }
+}
+    </style>
+<div id="quiz_form" class="container">
+
+  <h2 class="text-warning">Category Details</h2><hr>
+  <div class="form-group">
+    <label>Category Name </label>
+    <p>{{ category.name }}</p>
+  </div>
+  <div class="form-group">
+    <label>Details</label>
+    <p style="text-align: justify;">{{ category.description }}</p>
+  </div>
+   <div class="form-group">
+    <label>Total Question : {{ question.count }}</label>
+  </div>
+  <div class="form-group">
+    <label>Total Time : {{ category.total_time }} min</label>
+  </div>
+  <div class="form-group mb-4" style="width: 50%;margin: 0 auto;margin-bottom: 12px;">
+      {% if question.count > 9 %}
+       {% if is_attemp %}
+      <a class="btn btn-primary text-center">Already Attemped</a>
+      {% else %}
+      <a href="{% url 'App_Quiz:startquiz' category.id%}" class="btn btn-primary text-center">Start Quiz</a>
+      {% endif %}
+    </div>
+      {% else %}
+   <h4 class="text-warning text-justify">There is not enough question for {{ category }}.please try with other category</h4>
+      {% endif %}
+
+
+</div>
+{% endblock %}

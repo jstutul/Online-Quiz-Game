@@ -1,0 +1,334 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <style>
+    #levelname {
+    border: 1px solid #cd9606;
+    padding: 5px 5px 3px 5px;
+    border-radius: 10px;
+    background: #cd9606;
+    color: #fff;
+    }
+    #q0{
+    width: 60%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-top: 10%;
+    padding: 10px 40px
+    }
+    .question_design {
+            width: 80%;
+            height: 400px;
+            margin: 0 auto;
+        }
+ }
+    @media only screen and (max-width:500px) {
+    #q0{
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 13px 10px
+    }
+    .btn-primary{
+        width: 100%;
+    }
+        }
+    .question_design{
+    width: 80%;
+    margin: 0 auto;
+    padding: 6px 5px;
+    margin-top: 5%;
+    }
+    .question_design ul li{
+    border: 1px solid;
+    border-radius: 10px;
+    background: #cd9606;
+    padding: 2px 10px;
+    color: white;
+    }
+    .question_design ul li:hover{
+        background: rgba(255, 40, 200, 0.73);
+    }
+    </style>
+       <div class="row col-md-12 mb-4" style="border-bottom: 6px solid;margin: 0 auto;margin-bottom: 5px;">
+           <div class="col-md-5">
+             <h4>Welcome! to Participate in <span class="name">{{ tournament }} Tournament </span></h4>
+           </div>
+           <div class="col-md-3">
+             <h4><span class="name" id="levelname">{{ request.user.profile.get_level }}</span></h4>
+           </div>
+           <div class="col-md-4">
+             <input type="hidden" value="{{ tournament.time }}" id="timercount">
+             <h4 class="time">Time Remaining :<span id="time" class="name">{{ tournament.time }}:00</span></h4>
+           </div>
+        </div>
+       <div id="q0">
+
+         <h2 class="text-warning">Tournament Details</h2><hr>
+  <div class="form-group">
+    <label>Tournament Name </label>
+    <p>{{ tournament.name }}</p>
+  </div>
+  <div class="form-group">
+    <label>Details</label>
+    <p style="text-align: justify;">{{ tournament.description }}</p>
+  </div>
+   <div class="form-group">
+    <label>Date Range : {{ tournament.start_date|date }} to {{ tournament.end_date|date }}</label>
+  </div>
+   <div class="form-group">
+    <label>Entry Points and Winning Points : {{ tournament.entry_point }} and {{ tournament.winning_points }}</label>
+  </div>
+  <div class="form-group">
+    <label>Total Question : {{ remain_question }} / {{ tournament.get_tournament_question_number.count }}</label>
+  </div>
+ <div class="form-group">
+    <label>Total Time : {{ tournament.time }} min</label>
+  </div>
+  <div class="form-group mb-4" style="width: 50%;margin: 0 auto;margin-bottom: 12px;">
+      {% if tournament.get_tournament_question_number.count > 9 and remain_question != 0 %}
+          {% if request.user.profile.points >= tournament.entry_point %}
+          <a onclick="goNext(0)" class="btn btn-primary text-center">Start Tournament</a>
+          {% else %}
+           <h4 class="text-danger text-center">You have not enough point to start the tournament</h4>
+          {% endif %}
+    </div>
+      {% elif remain_question == 0 %}
+          {% if is_complete == True %}
+               <h4 class="text-warning text-justify">You have already win & got your points</h4>
+          {% else %}
+       <h4 class="text-warning text-justify">You have completed the tournament.Please get your point</h4>
+       <a href="{% url 'App_Quiz:winning_points' tournament.id %}" class="btn btn-primary">Get Point</a>
+      {% endif %}
+
+      {% else %}
+         <h4>There is not enough question.Mnimum question 10</h4>
+      {% endif %}
+      </div>
+ <input type="hidden" id="status" value="{{ is_first }}">
+<form method="post"id="cartCheckout" name="cartCheckout" action="">{% csrf_token %}
+{% for q in all_question %}
+   <div id="q{{ forloop.counter }}" class="question_design" style="display: none">
+  <h3>{{ forloop.counter }}. {{ q.title }} </h3>
+   <ul>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_a{{ q.id }}">{{q.option1}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_b{{ q.id }}">{{q.option2}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_c{{ q.id }}">{{q.option3}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_d{{ q.id }}">{{q.option4}}</li><br>
+   <p style="display: none;" id="answer_{{ q.id }}">{{q.answer}}</p><br>
+   </ul>
+   {% if forloop.counter != remain_question %}
+  <a class="btn btn-primary mt-2" onclick="goNext({{ forloop.counter }})" id="nextbtn{{ q.id }}" style="display: none;width: 13%;">Next {{ forloop.counter }} / {{ remain_question}}</a>
+  {% else %}
+   <button type="submit" class="btn btn-success" onclick="GetTime();">Submit Answer</button>
+  {% endif %}
+  </div>
+    <script>
+     function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+        function shownnext_{{ q.id }}(optionid) {
+            var option_id=document.getElementById(optionid.id);
+            var answer=document.getElementById("answer_{{ q.id }}").innerText;
+            var cor=parseInt(document.getElementById("correct").value, 10);
+
+            if (optionid.innerText == answer){
+                soundsArray[0].play();
+                cor=cor+1;
+                var question_id='{{ q.id }}';
+                var tournament_id='{{tournament.id}}';
+                var url ="{% url 'App_Quiz:completed' %}";
+                fetch(url,{
+                    method:'POST',
+                    headers:{
+                        'Content-type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    },
+                    body:JSON.stringify({'journalId':question_id,'tournament_id':tournament_id})
+                });
+
+                document.getElementById("correct").value=cor;
+                document.getElementById(option_id.id).style.background="green";
+                document.getElementById(option_id.id).style.pointerEvents="none";
+                if (option_id.id == option_a{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_b{{ q.id }}.id){
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_c{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_d{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                }
+            }
+            else{
+                document.getElementById(option_id.id).style.background="red";
+                 var url = "{% url 'App_Quiz:tournament_result' tournament.id %}";
+                 var worng=parseInt(document.getElementById("correct").value, 10);
+                 var kk=5;
+                 var ll={{ forloop.counter }}
+                 worng=worng+1;
+                    soundsArray[1].play();
+                 if (ll>kk && document.getElementById("status").value == "False"){
+                      document.location.href = url;
+                      if (option_id.id == option_a{{ q.id }}.id){
+                       document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                       document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                       document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                        }
+                        else if (option_id.id == option_b{{ q.id }}.id){
+                           document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                        }
+                        else if (option_id.id == option_c{{ q.id }}.id){
+                           document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                        }
+                        else if (option_id.id == option_d{{ q.id }}.id){
+                           document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                           document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                        }
+
+                }
+                 else if (document.getElementById("status").value == "True") {
+                       document.location.href = url;
+                     if (option_id.id == option_a{{ q.id }}.id) {
+                         document.getElementById(option_b{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_c{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_d{{ q.id }}.id).style.pointerEvents = "none";
+                     } else if (option_id.id == option_b{{ q.id }}.id) {
+                         document.getElementById(option_a{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_c{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_d{{ q.id }}.id).style.pointerEvents = "none";
+                     } else if (option_id.id == option_c{{ q.id }}.id) {
+                         document.getElementById(option_b{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_a{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_d{{ q.id }}.id).style.pointerEvents = "none";
+                     } else if (option_id.id == option_d{{ q.id }}.id) {
+                         document.getElementById(option_b{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_c{{ q.id }}.id).style.pointerEvents = "none";
+                         document.getElementById(option_a{{ q.id }}.id).style.pointerEvents = "none";
+                     }
+                 }
+
+
+            }
+        var x=document.getElementById("nextbtn{{ q.id }}");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+          } else if (x.style.display === "block") {
+             x.style.display = "block";
+          }
+
+    }
+
+
+    </script>
+
+{% endfor %}
+
+<input type="hidden" name="time" id="time_toke" value="">
+<input type="hidden" name="correct" id="correct" value="0">
+<input type="hidden" name="total_question" value="{{ question.count }}">
+</form>
+    <script>
+      var correct = new Audio('{% static 'sound/correct.mp3' %}');
+        var gameover = new Audio('{% static 'sound/gameover.mp3' %}');
+        var ticktock = new Audio('{% static 'sound/ticktock.mp3' %}');
+        var outoftime = new Audio('{% static 'sound/outoftime.mp3' %}');
+        var winner = new Audio('{% static 'sound/sparkle.mp3' %}');
+        var open = new Audio('{% static 'sound/opening.mp3' %}');
+        var soundsArray = [correct, gameover, ticktock, outoftime, winner,open];
+
+      function goNext(i)
+      {
+          if(i==0){
+             soundsArray[5].play();
+
+           var urlw ="{% url 'App_Quiz:incompleted' %}";
+                var wtournament_id='{{tournament.id}}';
+                fetch(urlw,{
+                    method:'POST',
+                    headers:{
+                        'Content-type':'application/json',
+                        'X-CSRFToken':csrftoken,
+                    },
+                    body:JSON.stringify({'tournament_id':wtournament_id})
+                });
+          }
+
+
+          document.getElementById("q"+i).style.display = 'none';
+          i++;
+          document.getElementById("q"+i).style.display = 'block';
+          if (i===1){
+             var total_time  ={{ tournament.time  }};
+            var fiveMinutes = 60 *total_time,
+            display = document.querySelector('#time');
+            startTimer(fiveMinutes, display);
+            console.log(fiveMinutes);
+            window.setTimeout(function() { document.cartCheckout.submit(); }, fiveMinutes*1000);
+          }
+
+      }
+      function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+
+            if (timer < 0){}
+             timer = 0;
+             console.log(timer);
+        }
+         if (timer == 20){
+            soundsArray[2].play();
+        }
+
+    }, 1000);
+}
+function GetTime() {
+        var time=document.querySelector('#time').innerHTML;
+        document.getElementById("time_toke").value=time;
+    }
+  </script>
+{% endblock %}

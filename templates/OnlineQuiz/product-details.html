@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+	<section>
+			<div class="row" style="margin: 0 auto;">
+                <h3>Dashboard</h3><hr>
+                <div class="col-sm-8">
+                    <p><strong>Username :</strong> {{ request.user }}</p>
+                    <p><strong>Email :</strong> {{ request.user.email }}</p>
+                    <p><strong>First Name :</strong> {{ request.user.first_name }}</p>
+                    <p><strong>Last Name :</strong> {{ request.user.last_name }}</p>
+                    <p><strong>Lavel :</strong> {{ request.user.profile.level }}</p>
+                    <p><strong>Total Point :</strong> {{ request.user }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <img src="{% static 'images/shop/product12.jpg' %}" style="width: 200px;height: 200px;">
+                </div>
+            </div>
+
+    </section>
+{% endblock %}

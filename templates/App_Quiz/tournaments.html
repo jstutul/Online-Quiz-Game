@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+tournaments page
+{% endblock %}
+{% block css %}
+.choose ul li a {
+    color:#ffffff;
+}
+    .nav-justified>li {
+    width: 100%;
+    }
+    .col-sm-3 {
+    border: 1px solid;
+    border-radius: 10px;
+}
+.img_category{
+    width: 242px;
+        height: 130px;
+    padding: 14px;
+    }
+.descrip{
+    text-alignment:justify;
+    }
+{% endblock %}
+{% block content %}
+	<section id="advertisement">
+			<img src="{% static 'images/shop/advertisement.jpg' %}" alt="" />
+	</section>
+
+	<section>
+			<div class="row" style="margin: 0 auto;">
+				<div class="col-sm-12 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Latest Tournaments</h2>
+                        {% for tour in all_tournaments %}
+                        <div class="col-sm-3">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<img src="{{ tour.photo.url }}" alt="" class="img_category" />
+										<h2>{{ tour.name | capfirst }}</h2>
+                                        <span>Last Date : {{ tour.end_date | date}}</span>
+									</div>
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="{% url 'App_Quiz:tournament_start' tour.id %}" class="btn btn-warning text-danger">
+                                            <i class="fa fa-play"></i>Details</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+
+
+
+
+					</div><!--features_items-->
+                    <ul class="pagination mt-4">
+                             {% if all_tournaments.has_previous  %}
+                             <li><a href="?page={{ all_tournaments.previous_page_number }}"><<</a></li>
+                             {% endif %}
+
+							<li><a  href="?page={{ all_tournaments.number }}">{{ all_tournaments.number }}</a></li>
+
+                    {% if all_tournaments.has_next  %}
+                    <li class="page-item">
+                      <li><a href="?page={{ all_tournaments.next_page_number }}"> >> </a></li>
+                  {% endif %}
+						</ul>
+				</div>
+			</div>
+	</section>
+{% endblock %}

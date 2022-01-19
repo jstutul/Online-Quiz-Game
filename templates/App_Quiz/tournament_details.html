@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+tournament details
+{% endblock %}
+{% block content %}
+    <style>
+    #quiz_form{
+        width: 55%;
+        margin:0 auto;
+    }
+    @media only screen and (max-width:500px) {
+   #quiz_form{
+        width: 100%;
+        margin:0 auto;
+    }
+}
+    </style>
+<div id="quiz_form" class="container">
+
+  <h2 class="text-warning">Tournament Details</h2><hr>
+  <div class="form-group">
+    <label>Tournament Name </label>
+    <p>{{ tournament.name }}</p>
+  </div>
+  <div class="form-group">
+    <label>Details</label>
+    <p style="text-align: justify;">{{ tournament.description }}</p>
+  </div>
+   <div class="form-group">
+    <label>Date Range : {{ tournament.start_date|date }} to {{ tournament.end_date|date }}</label>
+  </div>
+   <div class="form-group">
+    <label>Entry Points and Winning Points : {{ tournament.entry_point }} and {{ tournament.winning_points }}</label>
+  </div>
+  <div class="form-group">
+    <label>Total Question : {{ tournament.get_tournament_question_number.count }}</label>
+  </div>
+ <div class="form-group">
+    <label>Total Time : {{ tournament.time }} min</label>
+  </div>
+  <div class="form-group mb-4" style="width: 50%;margin: 0 auto;margin-bottom: 12px;">
+      {% if tournament.get_tournament_question_number.count > 9 %}
+      <a href="{% url 'App_Quiz:tournament_start' tournament.id %}" class="btn btn-primary text-center">Start Tournament</a>
+    </div>
+      {% else %}
+   <h4 class="text-warning text-justify">There is not enough question for {{ tournament }}.please try with other tournament</h4>
+      {% endif %}
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'App_Superadmin/base.html' %}
+
+{% block content %}
+            <div class="col-lg-6">
+
+                 {%for message in messages %}
+                    {%if "cat_update" in message.tags %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    {{ message }}
+                  </div>
+                    {% endif %}
+                 {% endfor %}
+              <!-- General Element -->
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Update Category</h6>
+                </div>
+                <div class="card-body">
+                  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">Category Name</label>
+                          <input type="text" class="form-control"value="{{ cat.name }}" name="cat_name" placeholder="Enter category name" required>
+                    </div>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Max Time (in integer)</label>
+                          <input type="number" class="form-control"value="{{ cat.total_time }}" name="cat_time" placeholder="Enter max time " required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Description</label>
+                      <textarea class="form-control" name="cat_description" id="exampleFormControlTextarea1" rows="3" required>{{ cat.description }}</textarea>
+                    </div>
+                     <div class="form-group span4">
+                            <div class="Form-row">
+                                {% if cat.phoro != "" %}
+                              <img src="{{ cat.photo.url }}" width="200" height="200" alt="Buyer photo">
+                                {% endif %}
+                            </div>
+                     </div>
+
+
+                    <div class="form-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="cat_photo" id="customFile">
+                        <label class="custom-file-label"  for="customFile">Choose photo</label>
+                      </div>
+                    </div>
+                      <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'App_Superadmin/base.html' %}
+
+{% block content %}
+            <div class="col-lg-6">
+
+                 {%for message in messages %}
+                    {%if "attempresult" in message.tags %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    {{ message }}
+                  </div>
+                    {% endif %}
+                 {% endfor %}
+              <!-- General Element -->
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Update Attemp Result</h6>
+                </div>
+                <div class="card-body">
+                  <form method="post">{% csrf_token %}
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">Correct Score</label>
+                          <input type="number" class="form-control"value="{{ quiz.correct }}" name="correct"required>
+                    </div>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Wrong Score</label>
+                          <input type="number" class="form-control"value="{{ quiz.wrong }}" name="wrong" placeholder="Enter max time " required>
+                    </div>
+                       <div class="form-group">
+                          <label for="exampleInputEmail1">Total Score</label>
+                          <input type="number" class="form-control"value="{{ quiz.score }}" name="score" required>
+                    </div>
+                      <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+{% endblock %}

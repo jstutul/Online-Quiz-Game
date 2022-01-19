@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <section>
+<div class="row col-md-12" style="margin: 0 auto;">
+        <div class="col col-md-4" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" width="200px" height="200px">
+        </div>
+        {%for message in messages %}
+                    {%if "quiz" in message.tags %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                   <h2>You have already submitted your attemp</h2>
+                  </div>
+
+                    {%endif%}
+                {%endfor%}
+
+        <div class="col col-md-4" style="margin: 0 auto;">
+                <h2>Quiz Category : {{ result.category }}</h2><hr>
+                <h3>Correct Answer : {{ result.corrent }} / {{ result.category.get_question_number.count }}</h3>
+                <h4>Achieve Points : {{ result.point }} </h4>
+                <h4>Time Taken : {{ result.timetaken }} min</h4>
+                <h4>Fixed Time : {{ result.category.get_time }}:00 min</h4>
+            <hr>
+                <a class="btn btn-danger" href="{% url 'App_Quiz:startquiz'  result.category.id %}">Restart</a>
+                {% if result.asnwer_show > 2 %}
+                <a class="btn btn-success" href="{% url 'App_Quiz:view_answer' result.category.id %}">Show Answer</a>
+                {% else %}
+                <a class="btn btn-success" disabled="">Show Answer</a>
+                {% endif %}
+        </div>
+         <div class="col col-md-4" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" width="200px" height="200px">
+        </div>
+</div>
+
+</section>
+
+{% endblock %}

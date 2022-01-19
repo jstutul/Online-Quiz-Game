@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+signup page
+{% endblock %}
+{% block content %}
+    <style>
+    #signup_form{
+        width: 60%;
+        margin:0 auto;
+    }
+    @media only screen and (max-width:500px) {
+   #signup_form{
+        width: 100%;
+        margin:0 auto;
+    }
+}
+    .errormsg{
+    padding: 5px;
+    background: yellow;
+    width: 50%;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: red;
+    }
+    @media only screen and (max-width:500px) {
+     .errormsg{
+    padding: 5px;
+    background: yellow;
+    width: 90%;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: red;
+    }
+  }
+
+    </style>
+{% if messages %}
+    <div class="text-center text-danger errormsg">
+
+         {% for message in messages %}
+  <strong>{{ message}}</strong>
+        {% endfor %}
+    </div>
+      {% endif %}
+
+<form autocomplete="off" method="post" action="{% url 'App_Account:signup' %}" id="signup_form">{% csrf_token %}
+
+    <h2 class="text-warning">Signup Page</h2><hr>
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text"id="username" name="username"  placeholder="Enter username" required>
+    <small>Error message</small>
+  </div>
+    <div class="form-group">
+    <label>Email address</label>
+    <input type="email"  id="email" name="email" placeholder="Enter email" required>
+     <small>Error message</small>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password"  id="password" name="password" placeholder="Enter 8 character Password" required>
+     <small>Error message</small>
+  </div>
+   <div class="form-group">
+    <label>Confirm Password</label>
+    <input type="password"  id="password2" name="password2" placeholder="Confirm Password" required>
+     <small>Error message</small>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

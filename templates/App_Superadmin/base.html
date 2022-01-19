@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>{% block title %}
+  online quiz app
+  {% endblock %}</title>
+  <link href="{% static 'superadmin/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'superadmin/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'superadmin/css/ruang-admin.min.css' %}" rel="stylesheet">
+  <link href="{% static 'superadmin/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link href="{% static 'superadmin/vendor/select2/dist/css/select2.min.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'App_Quiz:home' %}">
+        <div class="sidebar-brand-icon">
+          <img src="{% static 'images/home/logo.png' %}">
+        </div>
+        Quizapp
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'App_Superadmin:dashboard' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        Features
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+          aria-expanded="true" aria-controls="collapseBootstrap">
+          <i class="far fa-fw fa-window-maximize"></i>
+          <span>Category</span>
+        </a>
+        <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'App_Superadmin:add-category' %}">Add Category</a>
+            <a class="collapse-item" href="{% url 'App_Superadmin:manage-category' %}">Manage Category</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
+          aria-controls="collapseForm">
+          <i class="fab fa-fw fa-wpforms"></i>
+          <span>Category Question</span>
+        </a>
+        <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'App_Superadmin:add-cat-question' %}">Add Question</a>
+            <a class="collapse-item" href="{% url 'App_Superadmin:manage-category-question' %}">Manage Question</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
+          aria-controls="collapseTable">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tournaments</span>
+        </a>
+        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'App_Superadmin:add-tournament' %}">Add Tournament</a>
+            <a class="collapse-item" href="{% url 'App_Superadmin:manage-tournament' %}">Manage Tournamanet</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsea" aria-expanded="true"
+          aria-controls="collapseForm">
+          <i class="fab fa-fw fa-wpforms"></i>
+          <span>Tournament Question</span>
+        </a>
+        <div id="collapsea" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'App_Superadmin:add-tournament-question' %}">Add Question</a>
+            <a class="collapse-item" href="{% url 'App_Superadmin:manage-tournament-question' %}">Manage Question</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+        </nav>
+        <!-- Topbar -->
+
+        <!-- Container Fluid-->
+       {% block content %}
+
+       {% endblock %}
+        <!---Container Fluid-->
+      </div>
+      <!-- Footer -->
+    </div>
+  </div>
+
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script src="{% static 'superadmin/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'superadmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'superadmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'superadmin/js/ruang-admin.min.js' %}"></script>
+
+  <script src="{% static 'superadmin/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'superadmin/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'superadmin/vendor/select2/dist/js/select2.min.js' %}"></script>
+  <!-- Page level custom scripts -->
+  <script>
+    $(document).ready(function () {
+      $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    });
+    $(document).ready(function () {
+      $('#dataTableHover1').DataTable(); // ID From dataTable with Hover
+    });
+  </script>
+<script>
+    $(document).ready(function () {
+
+
+      $('.select2-single').select2();
+
+      // Select2 Single  with Placeholder
+      $('.select2-single-placeholder').select2({
+        placeholder: "Select a Province",
+        allowClear: true
+      });
+
+      // Select2 Multiple
+      $('.select2-multiple').select2();
+
+    });
+  </script>
+</body>
+
+</html>

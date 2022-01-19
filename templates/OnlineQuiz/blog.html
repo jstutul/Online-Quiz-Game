@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <style>
+    #q0{
+    width: 60%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-top: 10%;
+    padding: 10px 40px
+    }
+    .question_design label{
+    border: 2px solid #e4cd83;
+    border-radius: 7px;
+    background: #e4cd8c;
+    color: #000000;
+    padding: 3px 3px;
+    margin: 7px 1px;
+    }
+    .question_design label:hover{
+        background: green;
+    }
+    @media only screen and (max-width:500px) {
+    #q0{
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 13px 10px
+    }
+    .btn-primary{
+        width: 100%;
+    }
+        }
+    .question_design{
+    width: 80%;
+    margin: 0 auto;
+    padding: 6px 5px;
+    margin-top: 5%;
+    }
+
+    </style>
+       <div class="row col-md-12 mb-4" style="border-bottom: 6px solid;margin: 0 auto;margin-bottom: 5px;">
+           <div class="col-md-8">
+             <h4>Welcome! to Participate in <span class="name">{{ category }} Quiz </span></h4>
+           </div>
+           <div class="col-md-4">
+             <input type="hidden" value="{{ category.total_time }}" id="timercount">
+             <h4 class="time">Time Remaining :<span id="time" class="name">0{{ category.total_time }}:00</span></h4>
+           </div>
+        </div>
+       <div id="q0">
+          <div class="form-group">
+            <label>Category Name </label>
+            <p>{{ category.name }}</p>
+          </div>
+          <div class="form-group">
+            <label>Details</label>
+            <p style="text-align: justify;">{{ category.description }}</p>
+          </div>
+           <div class="form-group">
+            <label>Total Question : {{ question.count }}</label>
+          </div>
+          <div class="form-group">
+            <label>Total Time : {{ category.total_time }} min</label>
+          </div>
+        {% if request.user.is_authenticated %}
+          <div class="form-group">
+            <label>Remaining Chance : {{ is_attemp }}</label>
+          </div>
+       {% endif %}
+          <div class="form-group mb-4" style="width: 50%;margin: 0 auto;margin-bottom: 12px;">
+              {% if question.count > 4 %}
+               {% if is_attemp <= 0 %}
+              <a class="btn btn-primary text-center">Already Attemped</a>
+              {% else %}
+              <a onclick="goNext(0)" class="btn btn-primary text-center">Start Quiz</a>
+              {% endif %}
+            </div>
+            {% else %}
+           <h4 class="text-warning text-justify">There is not enough question for {{ category }}.please try with other category</h4>
+      {% endif %}
+      </div>
+<form method="post"id="cartCheckout" name="cartCheckout" action="{% url 'App_Quiz:checkresult' category.id %}">{% csrf_token %}
+{% for q in question %}
+   <div id="q{{ forloop.counter }}" class="question_design" style="display: none">
+  <h3>{{ forloop.counter }} {{ q.title }} </h3>
+   <label><input type="radio" name="option_{{ forloop.counter }}" onchange="alert(hi);" onclick="shownnext_{{ q.id }}();" value="{{q.option1}}">{{q.option1}}</label><br>
+   <label><input type="radio" name="option_{{ forloop.counter }}" onclick="shownnext_{{ q.id }}();" value="{{q.option2}}">{{q.option2}}</label><br>
+   <label><input type="radio" name="option_{{ forloop.counter }}" onclick="shownnext_{{ q.id }}();" value="{{q.option3}}">{{q.option3}}</label><br>
+   <label><input type="radio" name="option_{{ forloop.counter }}" onclick="shownnext_{{ q.id }}();" value="{{q.option4}}">{{q.option4}}</label><br>
+   {% if forloop.counter != question.count %}
+  <a class="btn btn-primary" onclick="goNext({{ forloop.counter }})" id="nextbtn{{ q.id }}" style="display: none;width: 13%;">Next Question</a>
+  {% else %}
+   <button type="submit" class="btn btn-success" onclick="GetTime();">Submit Answer</button>
+  {% endif %}
+    <p>{{ forloop.counter }} / {{ question.count }}</p>
+  </div>
+    <script>
+        function shownnext_{{ q.id }}() {
+        var x=document.getElementById("nextbtn{{ q.id }}");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+          } else if (x.style.display === "block") {
+             x.style.display = "block";
+          }
+
+    }
+    </script>
+
+{% endfor %}
+<input type="hidden" name="time" id="time_toke" value="">
+<input type="hidden" name="question_no" value="">
+</form>
+    <script>
+
+      function goNext(i)
+      {
+          document.getElementById("q"+i).style.display = 'none';
+          i++;
+          document.getElementById("q"+i).style.display = 'block';
+          if (i===1){
+             var total_time  ={{ category.total_time  }};
+            var fiveMinutes = 60 *total_time,
+            display = document.querySelector('#time');
+            startTimer(fiveMinutes, display);
+            console.log(fiveMinutes);
+            window.setTimeout(function() { document.cartCheckout.submit(); }, fiveMinutes*1000);
+          }
+
+      }
+      function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+
+            if (timer < 0){}
+             timer = 0;
+             console.log(timer);
+        }
+
+    }, 1000);
+}
+function GetTime() {
+        var time=document.querySelector('#time').innerHTML;
+        document.getElementById("time_toke").value=time;
+    }
+  </script>
+{% endblock %}

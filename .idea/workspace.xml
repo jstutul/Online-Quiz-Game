@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="891c708a-ef74-4db8-802c-559a2b497176" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/static/sound/about.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/correct.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/gameover.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/laugh.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/opening.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/outoftime.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/sparkle.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/sound/ticktock.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Quiz/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Quiz/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Quiz/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Quiz/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Quiz/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Quiz/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Quiz/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Quiz/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Superadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Superadmin/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/tutul.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/tutul.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/App_Quiz/startquiz.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/App_Quiz/startquiz.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/App_Quiz/starttournament.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/App_Quiz/starttournament.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/App_Quiz/unauthresult.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/App_Quiz/unauthresult.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tJJU9L9lkMMkM2moCZ64nAwMit" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Visual I\OnlineQuiz" />
+      <recent name="G:\Visual I\OnlineQuiz\static\js" />
+      <recent name="G:\Visual I\OnlineQuiz\templates\App_Account" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Visual I\OnlineQuiz\static" />
+      <recent name="G:\Visual I\OnlineQuiz\media" />
+      <recent name="G:\Visual I\OnlineQuiz\static\js" />
+      <recent name="G:\Visual I\OnlineQuiz\static\css" />
+      <recent name="G:\Visual I\OnlineQuiz\static\slider" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="OnlineQuiz" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="OnlineQuiz" type="Python.DjangoServer" factoryName="Django server">
+      <module name="OnlineQuiz" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="891c708a-ef74-4db8-802c-559a2b497176" name="Default Changelist" comment="" />
+      <created>1622481271171</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622481271171</updated>
+      <workItem from="1622481272880" duration="976000" />
+      <workItem from="1622482735472" duration="1776000" />
+      <workItem from="1622526843631" duration="6000" />
+      <workItem from="1622569137275" duration="580000" />
+      <workItem from="1622608154616" duration="302000" />
+      <workItem from="1622646180277" duration="4761000" />
+      <workItem from="1622694914147" duration="16000" />
+      <workItem from="1622751956038" duration="1095000" />
+      <workItem from="1622793568678" duration="4865000" />
+      <workItem from="1622799693303" duration="13671000" />
+      <workItem from="1622866760217" duration="13000" />
+      <workItem from="1622872497607" duration="7829000" />
+      <workItem from="1622913364771" duration="211000" />
+      <workItem from="1622913584489" duration="4755000" />
+      <workItem from="1622954537990" duration="175000" />
+      <workItem from="1622955229739" duration="13691000" />
+      <workItem from="1623040684269" duration="11000" />
+      <workItem from="1623167023452" duration="9467000" />
+      <workItem from="1623205875999" duration="1304000" />
+      <workItem from="1623211835181" duration="6000" />
+      <workItem from="1623263179058" duration="1863000" />
+      <workItem from="1623341300124" duration="295000" />
+      <workItem from="1623342143661" duration="10099000" />
+      <workItem from="1623386475625" duration="15459000" />
+      <workItem from="1623474263805" duration="197000" />
+      <workItem from="1623515121039" duration="3187000" />
+      <workItem from="1623519158518" duration="12540000" />
+      <workItem from="1623557562518" duration="133000" />
+      <workItem from="1623598966812" duration="11355000" />
+      <workItem from="1623645274677" duration="602000" />
+      <workItem from="1623681857734" duration="1300000" />
+      <workItem from="1623686713327" duration="8453000" />
+      <workItem from="1623733244283" duration="30000" />
+      <workItem from="1623949630084" duration="11997000" />
+      <workItem from="1624289852285" duration="698000" />
+      <workItem from="1624293381256" duration="4452000" />
+      <workItem from="1624335485925" duration="93000" />
+      <workItem from="1624374970391" duration="1060000" />
+      <workItem from="1624441261410" duration="295000" />
+      <workItem from="1624450395001" duration="8000" />
+      <workItem from="1624689149288" duration="2201000" />
+      <workItem from="1624694380651" duration="3452000" />
+      <workItem from="1624700958492" duration="13656000" />
+      <workItem from="1624769926748" duration="13000" />
+      <workItem from="1625672479750" duration="7751000" />
+      <workItem from="1626452910483" duration="12037000" />
+      <workItem from="1626503128786" duration="200000" />
+      <workItem from="1626630655386" duration="9833000" />
+      <workItem from="1626716284501" duration="55362000" />
+      <workItem from="1628099888851" duration="5490000" />
+      <workItem from="1628185887097" duration="6537000" />
+      <workItem from="1628437387611" duration="2521000" />
+      <workItem from="1628444192985" duration="4969000" />
+      <workItem from="1628483633921" duration="92000" />
+      <workItem from="1628616025775" duration="3817000" />
+      <workItem from="1628621352049" duration="614000" />
+      <workItem from="1628790521932" duration="1574000" />
+      <workItem from="1628856472487" duration="348000" />
+      <workItem from="1628881177842" duration="15000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="django-line">
+          <url>file://$PROJECT_DIR$/templates/App_Superadmin/base.html</url>
+          <line>25</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OnlineQuiz$main.coverage" NAME="main Coverage Results" MODIFIED="1628253664173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

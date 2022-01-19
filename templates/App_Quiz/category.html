@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+category page
+{% endblock %}
+{% block css %}
+.choose ul li a {
+    color:#ffffff;
+}
+    .nav-justified>li {
+    width: 100%;
+    }
+ .col-sm-3 {
+    border: 1px solid;
+    border-radius: 10px;
+}
+.img_category{
+    width: 242px;
+        height: 130px;
+    padding: 14px;
+    }
+.descrip{
+    text-alignment:justify;
+    }
+{% endblock %}
+{% block content %}
+	<section id="advertisement">
+			<img src="{% static 'images/shop/advertisement.jpg' %}" alt="" />
+	</section>
+
+	<section>
+			<div class="row " style="margin: 0 auto;">
+				<div class="col-sm-12 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Latest Category</h2>
+                        {% for cat in categories %}
+                        <div class="col-sm-3">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<img src="{{ cat.photo.url }}" alt="" class="img_category" />
+										<h2>{{ cat.name | capfirst }}</h2>
+									</div>
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="{% url 'App_Quiz:startquiz' cat.id %}" class="btn btn-warning text-danger"><i class="fa fa-play"></i>View</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+
+
+
+
+					</div><!--features_items-->
+                    <ul class="pagination mt-4">
+                             {% if categories.has_previous  %}
+                             <li><a href="?page={{ categories.previous_page_number }}"><<</a></li>
+                             {% endif %}
+
+							<li><a  href="?page={{ categories.number }}">{{ categories.number }}</a></li>
+
+                    {% if categories.has_next  %}
+                    <li class="page-item">
+                      <li><a href="?page={{ categories.next_page_number }}"> >> </a></li>
+                  {% endif %}
+						</ul>
+				</div>
+			</div>
+	</section>
+{% endblock %}

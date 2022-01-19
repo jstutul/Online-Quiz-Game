@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row col-md-12" style="margin: 0 auto;">
+<div class="col-md-6">
+    <img src="{% static '404.jpg' %}">
+</div>
+<div class="col-md-6">
+<h2>You have to answer all the question</h2>
+    <a onclick="refres();" class="btn btn-danger">Restart</a>
+</div>
+
+</div>
+    <script>
+    function refres() {
+        history.go(-1);
+    }
+    </script>
+{% endblock %}

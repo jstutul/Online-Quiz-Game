@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <section>
+<div class="row col-md-12" style="margin: 0 auto;">
+        <div class="col col-md-4" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" onload="myFunction();" width="200px" height="200px">
+        </div>
+        <div class="col col-md-4" style="margin: 0 auto;">
+                <h2>Quiz Category : {{ category }}</h2><hr>
+                <h3>Correct Answer : {{ score }} / {{ total_question}}</h3>
+                <h4>Achieve Points : {{ point }} </h4>
+                <h4>Time Taken : {{ time|floatformat:1 }} min</h4>
+                <h4>Fixed Time : {{ total_time }}:00 min</h4>
+            <hr>
+                <a class="btn btn-danger" href="{% url 'App_Quiz:startquiz'  category.id %}">Restart</a>
+        </div>
+         <div class="col col-md-4" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" width="200px" height="200px">
+        </div>
+</div>
+
+</section>
+    <script>
+     var outoftime = new Audio('{% static 'sound/outoftime.mp3' %}');
+ var soundsArray[outoftime];
+    function goback() {
+        history.go(-1);
+    }
+    document.onload = function() {myFunction()};
+
+function myFunction() {
+
+ soundsArray[0].play();
+}
+
+
+
+    </script>
+{% endblock %}

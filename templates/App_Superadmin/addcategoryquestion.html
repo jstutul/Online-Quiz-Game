@@ -1,0 +1,76 @@
+{% extends 'App_Superadmin/base.html' %}
+
+{% block content %}
+            <div class="col-lg-6">
+
+                 {%for message in messages %}
+                    {%if "question" in message.tags %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    {{ message }}
+                  </div>
+                    {% endif %}
+                 {% endfor %}
+              <!-- General Element -->
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Add Category Question</h6>
+                </div>
+                <div class="card-body">
+                  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">Question Title</label>
+                          <input type="text" class="form-control" name="cat_question_title" placeholder="Enter question" required>
+                    </div>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Select Level</label>
+                          <select class="form-control" id="exampleFormControlSelect1" name="level">
+                            <option value="easy">easy</option>
+                            <option value="medium">medium</option>
+                            <option value="hard">hard</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="select2SinglePlaceholder">Single Category</label>
+                    <select class="select2-single-placeholder form-control" name="category" id="select2SinglePlaceholder">
+                      {% for i in attcat %}
+                      <option value="{{ i.id }}">{{ i }}</option>
+                     {% endfor %}
+
+                    </select>
+                  </div>
+                    <div class="form-group">
+                          <label for="exampleInputEmail1">Option A</label>
+                          <input type="text" class="form-control" name="optiona"required>
+                    </div>
+                   <div class="form-group">
+                          <label for="exampleInputEmail1">Option B</label>
+                          <input type="text" class="form-control" name="optionb"required>
+                    </div>
+                   <div class="form-group">
+                          <label for="exampleInputEmail1">Option C</label>
+                          <input type="text" class="form-control" name="optionc"required>
+                    </div>
+                   <div class="form-group">
+                          <label for="exampleInputEmail1">Option D</label>
+                          <input type="text" class="form-control" name="optiond"required>
+                    </div>
+                  <div class="form-group">
+                          <label for="exampleInputEmail1">Answer</label>
+                          <input type="text" class="form-control" name="answer"required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Hints</label>
+                      <textarea class="form-control" name="hints" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    </div>
+
+                      <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+{% endblock %}

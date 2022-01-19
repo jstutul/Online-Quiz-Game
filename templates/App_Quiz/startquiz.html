@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+quiz details
+{% endblock %}
+{% block content %}
+    <style>
+    .resultbtn:hover {
+        background: #2a6496;
+        transition: 0.7s;
+    }
+    #levelname {
+    border: 1px solid #cd9606;
+    padding: 5px 5px 3px 5px;
+    border-radius: 10px;
+    background: #cd9606;
+    color: #fff;
+    }
+    #q0{
+    width: 60%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-top: 10%;
+    padding: 10px 40px
+    }
+    .question_design {
+            width: 80%;
+            height: 400px;
+            margin: 0 auto;
+        }
+ }
+    @media only screen and (max-width:500px) {
+    #q0{
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 13px 10px
+    }
+    .btn-primary{
+        width: 100%;
+    }
+        }
+    .question_design{
+    width: 80%;
+    margin: 0 auto;
+    padding: 6px 5px;
+    margin-top: 5%;
+    }
+    .question_design ul li{
+    border: 1px solid;
+    border-radius: 10px;
+    background: #cd9606;
+    padding: 2px 10px;
+    color: white;
+    }
+    .question_design ul li:hover{
+        background: rgba(255, 40, 200, 0.73);
+    }
+    </style>
+    {% if msg %}
+    <h3 class="text-center text-warning">{{ msg }}</h3>
+    {% else %}
+       <div class="row col-md-12 mb-4" style="border-bottom: 6px solid;margin: 0 auto;margin-bottom: 5px;">
+
+
+<div class="clearout"></div>
+           <div class="col-md-5">
+             <h4>Welcome! to Participate in <span class="name">{{ category }} Quiz </span></h4>
+           </div>
+           <div class="col-md-3">
+             <h4><span class="name" id="levelname">{{ user }}</span></h4>
+           </div>
+           <div class="col-md-4">
+             <input type="hidden" value="{{ category.total_time }}" id="timercount">
+             <h4 class="time">Time Remaining :<span id="time" class="name">{{ category.total_time }}:00</span></h4>
+           </div>
+        </div>
+       <div id="q0">
+          <div class="form-group">
+            <label>Category Name </label>
+            <p>{{ category.name }}</p>
+          </div>
+          <div class="form-group">
+            <label>Details</label>
+            <p style="text-align: justify;">{{ category.description }}</p>
+          </div>
+           <div class="form-group">
+            <label>Total Question : {{ all_question.count }}</label>
+          </div>
+           <div class="form-group">
+            <label>For You : {{ attend_question }}</label>
+          </div>
+          <div class="form-group">
+            <label>Total Time : {{ category.total_time }} min</label>
+          </div>
+
+          <div class="form-group mb-4" style="width: 100%;margin: 0 auto;margin-bottom: 12px;">
+              {% if question.count > 4 %}
+               {% if is_attemp <= 0 %}
+              <a class="btn btn-primary text-center">Already Attemped</a>
+              {% else %}
+              <a onclick="goNext(0)" style="margin: 10px 248px;" class="btn btn-primary text-center resultbtn">Start Quiz</a>
+              {% endif %}
+            </div>
+            {% else %}
+           <h4 class="text-warning text-justify">There is not enough question for {{ category }}.please try with other category</h4>
+                  <a href="{% url 'App_Quiz:startquiz' category.id %}" style="margin: 10px 248px;" class="btn btn-primary resultbtn">Refresh</a>
+      {% endif %}
+       {% if request.user.is_authenticated %}
+           {% if attemps.count > 0 %}
+                <a href="{% url 'App_Quiz:attemp_view' category.id %}" class="btn btn-primary resultbtn"style="margin: 10px 248px;">your result</a>
+               {% else %}
+               <p class="text-center text-danger">you have no score </p>
+               {% endif %}
+        {% endif %}
+      </div>
+<form method="post"id="cartCheckout" name="cartCheckout" action="{% url 'App_Quiz:checkresult' category.id %}">{% csrf_token %}
+{% for q in question %}
+   <div id="q{{ forloop.counter }}" class="question_design" style="display: none">
+  <h3>{{ forloop.counter }} {{ q.title }} </h3>
+   <ul>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_a{{ q.id }}">{{q.option1}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_b{{ q.id }}">{{q.option2}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_c{{ q.id }}">{{q.option3}}</li><br>
+   <li  onclick="shownnext_{{ q.id }}(this);" id="option_d{{ q.id }}">{{q.option4}}</li><br>
+   <li id="hints_{{ q.id }}" style="display: none;background: #06cd55;">Explanation:{{ q.hints }}</li>
+   <p style="display: none;" id="answer_{{ q.id }}">{{q.answer}}</p><br>
+   </ul>
+   {% if forloop.counter != question.count %}
+  <a class="btn btn-primary mt-2" onclick="goNext({{ forloop.counter }})" id="nextbtn{{ q.id }}" style="display: none;width: 13%;">Next {{ forloop.counter }} / {{ question.count }}</a>
+  {% else %}
+   <button type="submit" class="btn btn-success" onclick="GetTime();">Submit Answer</button>
+  {% endif %}
+  </div>
+    <script>
+
+        function shownnext_{{ q.id }}(optionid) {
+            var option_id=document.getElementById(optionid.id);
+            var answer=document.getElementById("answer_{{ q.id }}").innerText;
+            var cor=parseInt(document.getElementById("correct").value, 10);
+            var wor=parseInt(document.getElementById("wrong").value, 10);
+            if (optionid.innerText == answer){
+                  soundsArray[0].play();
+                cor=cor+1;
+                document.getElementById("correct").value=cor;
+                document.getElementById(option_id.id).style.background="green";
+                document.getElementById(option_id.id).style.pointerEvents="none";
+                if (option_id.id == option_a{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_b{{ q.id }}.id){
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_c{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_d{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                }
+            }
+            else{
+                 soundsArray[1].play();
+                 xx=document.getElementById("hints_{{ q.id }}");
+                 wor=wor+1;
+                 document.getElementById("wrong").value=wor;
+                 if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                  } else if (xx.style.display === "block") {
+                     xx.style.display = "block";
+                  }
+
+                 var crt = document.getElementById("correctanswerlist");
+                 const usingSplit = crt.value.split(',');
+                 console.log(usingSplit);
+                 const id = usingSplit.indexOf({{ q.id }});
+                 for (i=0;i<usingSplit.length;i++)
+                 {
+                     if (usingSplit[i] == {{ q.id }})
+                     {
+                         usingSplit.splice(id,  1);
+                     }
+                 }
+                 crt.value=usingSplit;
+                console.log(usingSplit)
+
+
+                document.getElementById(option_id.id).style.background="red";
+                  if (option_id.id == option_a{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_b{{ q.id }}.id){
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_c{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_d{{ q.id }}.id).style.pointerEvents="none";
+                }
+                else if (option_id.id == option_d{{ q.id }}.id){
+                   document.getElementById(option_b{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_c{{ q.id }}.id).style.pointerEvents="none";
+                   document.getElementById(option_a{{ q.id }}.id).style.pointerEvents="none";
+                }
+            }
+        var x=document.getElementById("nextbtn{{ q.id }}");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+          } else if (x.style.display === "block") {
+             x.style.display = "block";
+          }
+
+    }
+
+
+    </script>
+
+{% endfor %}
+<input type="hidden" name="time" id="time_toke" value="">
+<input type="hidden" name="correct" id="correct" value="0">
+<input type="hidden" name="wrong" id="wrong" value="0">
+<input type="hidden" name="total_question" value="{{ question.count }}">
+{#<input type="hidden" name="question_no" id="correctanswerlist" value="">#}
+<input type="hidden" name="question_no" id="correctanswerlist" value="{{ qunique_question_id|join:","}}">
+</form>
+    <script>
+        var correct = new Audio('{% static 'sound/correct.mp3' %}');
+        var gameover = new Audio('{% static 'sound/gameover.mp3' %}');
+        var ticktock = new Audio('{% static 'sound/ticktock.mp3' %}');
+        var outoftime = new Audio('{% static 'sound/outoftime.mp3' %}');
+        var winner = new Audio('{% static 'sound/sparkle.mp3' %}');
+        var open = new Audio('{% static 'sound/opening.mp3' %}');
+        var timerr = new Audio('{% static 'sound/ticktok.mp3' %}');
+        var soundsArray = [correct, gameover, ticktock, outoftime, winner,open,timerr];
+      function goNext(i)
+      {
+          if(i==0){
+             soundsArray[5].play();
+          }
+          document.getElementById("q"+i).style.display = 'none';
+          i++;
+          document.getElementById("q"+i).style.display = 'block';
+          if (i===1){
+             var total_time  ={{ category.total_time  }};
+            var fiveMinutes = 60 *total_time,
+            display = document.querySelector('#time');
+            startTimer(fiveMinutes, display);
+            console.log(fiveMinutes);
+            window.setTimeout(function() { document.cartCheckout.submit(); }, fiveMinutes*1000);
+          }
+
+      }
+      function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+
+            if (timer < 0){}
+             timer = 0;
+             console.log(timer);
+        }
+        if (timer == 20){
+            soundsArray[2].play();
+        }
+
+    }, 1000);
+}
+function GetTime() {
+        var time=document.querySelector('#time').innerHTML;
+        document.getElementById("time_toke").value=time;
+    }
+
+  </script>
+    {% endif %}
+
+
+    <script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+</script>
+
+
+{% endblock %}

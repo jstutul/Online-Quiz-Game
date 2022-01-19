@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+answer page
+{% endblock %}
+{% block content %}
+    <style>
+ .question_design {
+            width: 80%;
+            margin: 0 auto;
+            padding: 6px 5px;
+        }
+ .question_design li{
+    border: 2px solid #e4cd83;
+    border-radius: 7px;
+    background: #e4cd8c;
+    color: #000000;
+    padding: 3px 3px;
+    margin: 7px 1px;
+ }
+    @media only screen and (max-width:500px) {
+        .question_design {
+            width: 80%;
+            margin: 0 auto;
+            padding: 6px 5px;
+            margin-top: 5%;
+        }
+    }
+    </style>
+       <div class="col-md-12 mb-4" style="border-bottom: 6px solid;margin: 0 auto;margin-bottom: 5px;">
+             <h4 class="text-center" ><span class="name">Category Questions Answer </span></h4>
+        </div>
+{% for q in questions %}
+   <div class="question_design">
+   <h3>{{ forloop.counter }} {{ q.title }} </h3>
+   <ul>
+       {% if q.option1 == q.answer %}
+       <li class="text-success" style="background: green;border: none;color: white;">a.{{ q.option1 }}</li>
+       {% else %}
+       <li>a.{{ q.option1 }}</li>
+       {% endif %}
+       {% if q.option2 == q.answer %}
+       <li class="text-success" style="background: green;border: none;color: white;">b.{{ q.option2 }}</li>
+       {% else %}
+       <li>b.{{ q.option2 }}</li>
+       {% endif %}
+        {% if q.option3 == q.answer %}
+       <li class="text-success" style="background: green;border: none;color: white;">c.{{ q.option3 }}</li>
+       {% else %}
+       <li>c.{{ q.option3 }}</li>
+       {% endif %}
+       {% if q.option4 == q.answer %}
+       <li class="text-success" style="background: green;border: none;color: white;">d.{{ q.option4 }}</li>
+       {% else %}
+       <li>d.{{ q.option4 }}</li>
+       {% endif %}
+       <li><strong>Explanantion :</strong>{{ q.hints }}</li>
+   </ul>
+  </div>
+
+
+{% endfor %}
+
+
+{% endblock %}

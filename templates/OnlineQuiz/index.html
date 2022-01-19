@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+welcome to quizapp
+{% endblock %}
+{% block css %}
+.choose ul li a {
+    color:#ffffff;
+}
+.col-sm-3 {
+    border: 1px solid;
+    border-radius: 10px;
+}
+    .nav-justified>li {
+    width: 100%;
+    }
+.img_category{
+    width: 242px;
+    height: 130px;
+    padding: 14px;
+    }
+.descrip{
+    text-alignment:justify;
+    }
+{% endblock %}
+{% block content %}
+	<section id="slider"><!--slider-->
+
+			<div class="row" style="padding: 20px;">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+						</ol>
+						
+						<div class="carousel-inner">
+							<div class="item active">
+								<div class="col-sm-6">
+									<h1><span>Quiz</span>Application</h1>
+									<h2>Online Quiz Platform</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img src="{% static 'images/home/carasol3.jpg' %}" class="girl img-responsive" alt="" />
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-sm-6">
+									<h1><span>Quiz</span>Application</h1>
+									<h2>100% Responsive Design</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img src="{% static 'images/home/carasol2.jpg' %}" class="girl img-responsive" alt="" />
+								</div>
+							</div>
+							
+							<div class="item">
+								<div class="col-sm-6">
+									<h1><span>Quiz</span>Application</h1>
+									<h2>Enrich your Brain</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img src="{% static 'images/home/carasol1.jpg' %}" class="girl img-responsive" alt="" />
+								</div>
+							</div>
+							
+						</div>
+						
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+
+	</section>
+	
+	<section>
+
+			<div class="row" style="padding: 20px;">
+				<div class="col-sm-12 padding-right">
+					
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center mt-2">Latest Category</h2>
+						<h4 class="title"><a href="{% url 'App_Quiz:category' %}">view all</a></h4>
+                            {% for cat in category %}
+                           <div class="col-sm-3">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<img src="{{ cat.photo.url }}" alt="" class="img_category" />
+										<h2>{{ cat.name | capfirst }}</h2>
+									</div>
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="{% url 'App_Quiz:startquiz' cat.id %}" class="btn btn-warning text-danger"><i class="fa fa-play"></i>Start</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                            {% endfor %}
+
+					</div><!--features_items-->
+                    <div class="features_items"><!--features_items-->
+						<h2 class="title text-center mt-2">Latest Tournaments</h2>
+						<h4 class="title"><a href="{% url 'App_Quiz:tournaments' %}">view all</a></h4>
+                            {% for cat in tournament %}
+                            <div class="col-sm-3">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<img src="{{ cat.photo.url }}" alt="" class="img_category" />
+										<h2>{{ cat.name | capfirst }}</h2>
+                                        <p>Last Date : {{ cat.end_date|date }}</p>
+									</div>
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="{% url 'App_Quiz:tournament_start' cat.id %}" class="btn btn-warning text-danger">
+                                            <i class="fa fa-play"></i>Start</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                            {% endfor %}
+
+					</div><!--features_items-->
+
+
+
+					
+				</div>
+			</div>
+
+	</section>
+<div class="text-center">
+        <h2 class="title text-center">TOP RANK USER</h2>
+        <div class="row mx-auto my-auto">
+            <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
+
+                    {% for u in rankuser %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="product-image-wrapper">
+							<div class="single-products">
+								<div class="productinfo text-center">
+									<img src="{{ u.photo.url }}" style="width: 50%;" alt="" width="100px" height="100px"/>
+										<h2>{{ u.user }}</h2>
+										<p>{{u.get_level }}</p>
+										<p> {{ u.points }} points</p>
+									</div>
+
+								</div>
+							</div>
+
+                        </div>
+                    {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

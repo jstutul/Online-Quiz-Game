@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+dashboard
+{% endblock %}
+{% block content %}
+  <style>
+  #profile{
+      width: 300px;
+    height: 266px;
+    padding: 20px;
+  }
+  #btnpro{
+      border-radius: 20px;
+  }
+  #btnpro:hover{
+      background: red;
+  }
+  </style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<section id="content">
+    <div class="page-heading">
+        <div class="media clearfix">
+          <div class="media-left pr30">
+            <a href="#">
+              <img class="media-object mw150" id="profile" src="{{ request.user.profile.photo.url }}" alt="...">
+            </a>
+             <a class="btn btn-primary w-100" id="btnpro" href="{% url 'App_Account:update' %}">update profile</a>
+          </div>
+          <div class="media-body va-m">
+            <h2>{{ request.user }}
+              <small> - Profile</small>
+            </h2><hr>
+            <div class="media-links">
+              <ul class="list-inline list-unstyled">
+                <p><strong>Username :</strong> {{ request.user }}</p>
+                    <p><strong>Email :</strong> {{ request.user.email }}</p>
+                    <p><strong>First Name :</strong> {{ request.user.first_name }}</p>
+                    <p><strong>Last Name :</strong> {{ request.user.last_name }}</p>
+                    <p><strong>Lavel :</strong> {{ request.user.profile.get_level }}</p>
+                    <p><strong>Total Point :</strong> {{ request.user.profile.points }}</p>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </section>
+{% endblock %}

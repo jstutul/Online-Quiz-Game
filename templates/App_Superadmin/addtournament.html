@@ -1,0 +1,61 @@
+{% extends 'App_Superadmin/base.html' %}
+
+{% block content %}
+            <div class="col-lg-6">
+
+                 {%for message in messages %}
+                    {%if "tournament" in message.tags %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    {{ message }}
+                  </div>
+                    {% endif %}
+                 {% endfor %}
+              <!-- General Element -->
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Add Tournament Information</h6>
+                </div>
+                <div class="card-body">
+                  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">Tournament Name</label>
+                          <input type="text" class="form-control" name="tournament_name" placeholder="Enter tournament name" required>
+                    </div>
+                     <div class="form-group">
+                          <label for="exampleInputEmail1">Entry points (min 100)</label>
+                          <input type="number" class="form-control" name="tournament_entry_point"value="100" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Description</label>
+                      <textarea class="form-control" name="tournament_description" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="tournament_photo" id="customFile">
+                        <label class="custom-file-label"  for="customFile">Choose photo</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                          <label for="exampleInputEmail1">Winning points</label>
+                          <input type="number" class="form-control" name="winning_point"value="500" required>
+                    </div>
+                    <div class="form-group">
+                          <label for="exampleInputEmail1">Tournament Time (integer mode)</label>
+                          <input type="number" class="form-control" name="tournament_time"value="2" required>
+                    </div>
+                    <div class="form-group">
+                          <label for="exampleInputEmail1">End Date</label>
+                          <input type="date" class="form-control" name="tournament_date" required>
+                    </div>
+
+                      <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+{% endblock %}

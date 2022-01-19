@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+tournament result
+{% endblock %}
+{% block content %}
+    <section>
+<div class="row col-md-12" style="margin: 0 auto;">
+        <div class="col col-md-3" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" width="200px" height="200px">
+        </div>
+        <div class="col col-md-6" style="margin: 0 auto;">
+                <h3>Tournament Name : {{ tournament.name }}</h3><hr>
+                <h3 class="text-center">Correct Answer : {{ corrent }} / {{ total_question }}</h3>
+            <hr>
+            <h3 class="text-center"> <a href="{% url 'App_Quiz:tournament_start' tournament.id %}" class="btn btn-primary btn-circle text-center">Restart</a></h3>
+        </div>
+         <div class="col col-md-3" style="margin: 0 auto;">
+                <img src="{% static 'weldone.jpg' %}" width="200px" height="200px">
+        </div>
+</div>
+
+</section>
+
+{% endblock %}
